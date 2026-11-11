@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+  <meta name="theme-color" content="#091923">
+  <title>Free Kick Legends</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="stylesheet" href="style.css?v=9">
+  <link rel="stylesheet" href="visual-polish.css?v=5">
+  <!-- Three.js (3D library) in fixed version, loaded from a CDN -->
+  <script type="importmap">
+    { "imports": { "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js" } }
+  </script>
+</head>
+<body>
+  <div id="jogo"></div>
+
+  <div id="hud">
+    <div id="topo">
+      <div id="titulo">FREE KICK <span>LEGENDS</span></div>
+      <div id="topo-direita">
+        <span id="versao"></span>
+        <button id="botao-mudo" class="botao-redondo" type="button" aria-label="Mute sound" hidden>🔊</button>
+        <button id="botao-ajustes" class="botao-redondo" type="button" aria-label="Open settings">⚙</button>
+      </div>
+    </div>
+
+    <div id="modos" role="tablist" aria-label="Game mode">
+      <button type="button" data-modo="treino">Practice</button>
+      <button type="button" data-modo="desafio">Daily Tournament</button>
+      <button type="button" data-modo="penalti">Penalties</button>
+    </div>
+
+    <div id="linha-info">
+        <button id="cartao-cobrador" type="button" aria-label="Change taker"></button>
+      <div id="info-direita">
+        <div id="info"></div>
+        <div id="placar"></div>
+        <button id="botao-fixar" type="button" hidden>🎲 Random kick</button>
+        <button id="botao-ranking" type="button" hidden>🏆 Tournament table</button>
+      </div>
+    </div>
+    <section id="torneo-panel" hidden aria-label="Compact tournament scoreboard" aria-live="polite" aria-atomic="false">
+      <div class="torneo-cabecera">
+        <span id="torneo-ronda">Round of 16</span>
+        <span class="torneo-en-vivo" id="torneo-estado">IN PLAY</span>
+      </div>
+      <div class="torneo-duelo">
+        <div class="torneo-equipo torneo-equipo-jugador">
+          <span class="torneo-insignia" id="torneo-insignia-jugador" aria-hidden="true">YOU</span>
+          <span class="torneo-nombre" id="torneo-equipo-jugador">Your team</span>
+        </div>
+        <div class="torneo-marcador" aria-label="Score">
+          <span id="torneo-goles-jugador">0</span><i aria-hidden="true">:</i><span id="torneo-goles-rival">0</span>
+        </div>
+        <div class="torneo-equipo torneo-equipo-rival">
+          <span class="torneo-nombre" id="torneo-equipo-rival">Rival</span>
+          <span class="torneo-insignia" id="torneo-insignia-rival" aria-hidden="true">RIV</span>
+        </div>
+      </div>
+      <div class="torneo-progreso">
+        <span id="torneo-progreso-texto">Kick 1 of 5</span>
+        <div class="torneo-barra"><div id="torneo-progreso-barra"></div></div>
+      </div>
+    </section>
+  </div>
+
+  <div id="controles">
+    <div id="mira-area"></div>
+    <div id="bola-contato">
+      <div id="bola-visual"></div>
+      <div id="bola-ponto"></div>
+    </div>
+    <div id="barra-forca">
+      <div id="barra-preenchimento"></div>
+      <div id="barra-ideal"></div>
+    </div>
+    <div id="acoes-jogada">
+      <button id="botao-replay" type="button" hidden>▶ Replay</button>
+      <div>
+        <button id="botao-chute" type="button">SHOOT</button>
+      </div>
+      <div id="dica">Drag to aim · touch the ball to choose where the foot hits · hold SHOOT and release</div>
+    </div>
+
+    <div id="lista-cobradores" hidden>
+      <div class="folha">
+        <div class="folha-cabecalho">
+          <b>Who takes the kick?</b>
+          <button id="lista-fechar" type="button">Close</button>
+        </div>
+        <p class="folha-explica" id="lista-explica">Sorted by their rating for THIS free kick: distance, side, preferred foot and style. The overall rating is just a reference.</p>
+        <div id="lista-itens"></div>
+      </div>
+    </div>
+
+    <!-- Daily tournament table -->
+    <div id="ranking" hidden>
+      <div class="folha">
+        <div class="folha-cabecalho">
+          <b id="ranking-titulo">🏆 Tournament table</b>
+          <button id="ranking-fechar" type="button">Close</button>
+        </div>
+        <p class="folha-explica">Rounds won by each player in the day's tournament.</p>
+        <div id="ranking-entrar" hidden>
+          <p id="ranking-melhor">Your rounds won today: 0</p>
+          <div id="ranking-formulario">
+            <input id="ranking-nome" type="text" placeholder="Your name" maxlength="24" autocomplete="off" autocapitalize="words" spellcheck="false" enterkeyhint="send" aria-label="Your name">
+            <button id="ranking-enviar" type="button">Register 0 wins</button>
+          </div>
+          <small id="ranking-aviso" hidden>Type your name to enter.</small>
+        </div>
+        <p id="ranking-ja" hidden></p>
+        <div id="ranking-mensagem" hidden></div>
+        <div id="ranking-lista"></div>
+        <p class="folha-rodape">The tournament and the table reset at midnight. Everyone faces the same rivals and kicks.</p>
+      </div>
+    </div>
+
+    <div id="painel" hidden>
+      <div id="painel-cabecalho">
+        <b>Settings panel</b>
+        <button id="painel-fechar" type="button">Close</button>
+      </div>
+      <div id="painel-campos"></div>
+      <div id="painel-acoes">
+        <button id="painel-copiar" type="button">Copy settings</button>
+        <button id="painel-restaurar" type="button">Restore default values</button>
+      </div>
+      <div id="painel-aviso"></div>
+    </div>
+  </div>
+
+  <noscript>This game needs JavaScript to work.</noscript>
+  <script type="module" src="js/main.js?v=26"></script>
+</body>
+</html>
