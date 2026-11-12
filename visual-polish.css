@@ -1,0 +1,815 @@
+@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800;900&family=Barlow:wght@400;500;600;700;800&display=swap');
+
+:root {
+  --pitch-ink: #071520;
+  --pitch-glass: rgba(5, 19, 27, 0.76);
+  --pitch-glass-strong: rgba(7, 22, 29, 0.95);
+  --pitch-line: rgba(202, 230, 220, 0.22);
+  --pitch-gold: #f6d45a;
+  --pitch-lime: #b8ef71;
+  --pitch-text: #f4f5eb;
+  --pitch-muted: #c1cec8;
+}
+
+html,
+body {
+  background: #091923;
+  color: var(--pitch-text);
+  font-family: "Barlow", "Trebuchet MS", sans-serif;
+}
+
+#hud::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    linear-gradient(180deg, rgba(3, 13, 20, 0.68), rgba(3, 13, 20, 0.18) 19%, transparent 37%),
+    linear-gradient(0deg, rgba(3, 13, 20, 0.68), rgba(3, 13, 20, 0.12) 26%, transparent 43%),
+    radial-gradient(ellipse at 50% 55%, transparent 48%, rgba(4, 14, 21, 0.24));
+}
+
+#hud {
+  isolation: isolate;
+}
+
+#hud::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 4;
+  opacity: 0;
+  pointer-events: none;
+  mix-blend-mode: screen;
+}
+
+#hud.flash-impacto::after {
+  background: radial-gradient(ellipse at 52% 52%, rgba(255, 255, 255, 0.38), rgba(255, 255, 255, 0.12) 36%, transparent 76%);
+  animation: impacto-camera 280ms ease-out both;
+}
+
+#hud.flash-gol::after {
+  background: radial-gradient(ellipse at 50% 50%, rgba(255, 249, 214, 0.52), rgba(246, 212, 90, 0.2) 42%, transparent 82%);
+  animation: gol-camera 720ms cubic-bezier(0.16, 0.7, 0.28, 1) both;
+}
+
+@keyframes impacto-camera {
+  0% { opacity: 0.92; }
+  100% { opacity: 0; }
+}
+
+@keyframes gol-camera {
+  0% { opacity: 0.9; }
+  18% { opacity: 0.55; }
+  100% { opacity: 0; }
+}
+
+#titulo,
+#info,
+#mensagem,
+#resultado-titulo,
+#botao-chute,
+#contato-rotulo,
+.folha-cabecalho,
+#painel-cabecalho {
+  font-family: "Barlow Condensed", "Trebuchet MS", sans-serif;
+}
+
+#topo {
+  align-items: center;
+  padding: 7px 11px;
+  border: 1px solid rgba(224, 242, 228, 0.18);
+  border-radius: 13px;
+  background: linear-gradient(105deg, rgba(5, 18, 25, 0.88), rgba(9, 34, 39, 0.62));
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.22), inset 0 1px rgba(255, 255, 255, 0.06);
+}
+
+#titulo {
+  font-size: 19px;
+  line-height: 1;
+  letter-spacing: 0.12em;
+}
+
+#titulo span,
+.cartao-numero,
+.item-numero,
+.ranking-posicao.ouro {
+  color: var(--pitch-gold);
+}
+
+#versao {
+  border: 1px solid rgba(226, 240, 225, 0.16);
+  border-radius: 5px;
+  background: rgba(4, 15, 21, 0.56);
+  color: rgba(245, 248, 235, 0.8);
+  font-size: 10px;
+  letter-spacing: 0.04em;
+}
+
+.botao-redondo {
+  border-color: rgba(225, 241, 227, 0.34);
+  background: rgba(8, 25, 31, 0.66);
+  box-shadow: inset 0 1px rgba(255, 255, 255, 0.08);
+  transition: background 160ms ease, transform 160ms ease;
+}
+
+.botao-redondo:active {
+  transform: scale(0.94);
+  background: rgba(184, 239, 113, 0.24);
+}
+
+#modos {
+  margin-top: 9px;
+  gap: 7px;
+}
+
+#modos button {
+  padding: 7px 13px;
+  border-color: rgba(226, 242, 231, 0.32);
+  background: rgba(5, 19, 26, 0.7);
+  color: rgba(243, 247, 237, 0.88);
+  font: 700 12px/1 "Barlow", "Trebuchet MS", sans-serif;
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.18);
+  transition: background 160ms ease, border-color 160ms ease, transform 160ms ease;
+}
+
+#modos button.ativo {
+  border-color: var(--pitch-gold);
+  background: var(--pitch-gold);
+  color: #14231a;
+  box-shadow: 0 2px 12px rgba(246, 212, 90, 0.2);
+}
+
+#modos button:active,
+#botao-fixar:active,
+#botao-ranking:active {
+  transform: translateY(1px);
+}
+
+#linha-info {
+  margin-top: 11px;
+}
+
+#cartao-cobrador {
+  border-color: rgba(226, 242, 231, 0.22);
+  border-radius: 11px;
+  background: linear-gradient(115deg, rgba(7, 21, 29, 0.94), rgba(16, 37, 38, 0.89));
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.28), inset 3px 0 0 var(--pitch-gold);
+}
+
+.cartao-numero {
+  font-family: "Barlow Condensed", sans-serif;
+  font-size: 30px;
+}
+
+.cartao-nome b {
+  font-family: "Barlow Condensed", "Trebuchet MS", sans-serif;
+  font-size: 17px;
+}
+
+.cartao-nota b {
+  color: var(--pitch-lime);
+}
+
+#info {
+  font-size: 18px;
+  font-weight: 700;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
+}
+
+#placar {
+  color: rgba(242, 247, 237, 0.88);
+  font-variant-numeric: tabular-nums;
+}
+
+#hud.modo-torneo #placar { display: none; }
+
+/* Marcador editorial del torneo: una franja de transmisión, nunca una tarjeta de ajustes. */
+#torneo-panel {
+  width: min(100%, 480px);
+  margin: 7px auto 0;
+  padding: 9px 12px 8px;
+  border: 1px solid rgba(226, 242, 231, 0.24);
+  border-left: 3px solid var(--pitch-gold);
+  border-radius: 4px 11px 11px 4px;
+  background:
+    linear-gradient(105deg, rgba(5, 18, 25, 0.94), rgba(9, 30, 35, 0.83) 72%, rgba(10, 31, 33, 0.68));
+  box-shadow: 0 8px 26px rgba(0, 0, 0, 0.28), inset 0 1px rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(9px);
+  text-shadow: none;
+  color: var(--pitch-text);
+}
+
+#torneo-panel[hidden] { display: none; }
+
+.torneo-cabecera {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  color: rgba(242, 247, 237, 0.72);
+  font: 700 10px/1 "Barlow", sans-serif;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+}
+
+.torneo-en-vivo {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: #f0bb77;
+}
+
+.torneo-en-vivo::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.torneo-duelo {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  align-items: center;
+  gap: 12px;
+  margin-top: 6px;
+}
+
+.torneo-equipo {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+  overflow: hidden;
+  color: rgba(246, 248, 239, 0.9);
+  font: 700 14px/1.1 "Barlow Condensed", sans-serif;
+  letter-spacing: 0.04em;
+}
+
+.torneo-equipo-jugador { justify-content: flex-start; }
+.torneo-equipo-rival { justify-content: flex-end; text-align: right; }
+
+.torneo-nombre {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.torneo-insignia {
+  display: grid;
+  flex: none;
+  width: 24px;
+  height: 27px;
+  place-items: center;
+  clip-path: polygon(8% 0, 92% 0, 88% 71%, 50% 100%, 12% 71%);
+  border: 1px solid rgba(255, 255, 255, 0.55);
+  color: #fff;
+  font: 800 7px/1 "Barlow", sans-serif;
+  letter-spacing: 0.02em;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.72);
+  filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.4));
+}
+
+.torneo-vs { color: rgba(236, 241, 229, 0.42); font: 700 9px/1 "Barlow", sans-serif; }
+
+.torneo-marcador {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  color: var(--pitch-gold);
+  font: 800 25px/0.95 "Barlow Condensed", sans-serif;
+  font-variant-numeric: tabular-nums;
+}
+
+.torneo-marcador span { min-width: 13px; text-align: center; }
+.torneo-marcador i { color: rgba(240, 242, 230, 0.45); font-size: 17px; font-style: normal; }
+
+.torneo-progreso {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin-top: 7px;
+}
+
+.torneo-tiro {
+  flex: 1;
+  height: 4px;
+  border-radius: 5px;
+  background: rgba(232, 241, 231, 0.18);
+  overflow: hidden;
+}
+
+.torneo-tiro span {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
+  background: rgba(230, 239, 226, 0.42);
+}
+
+.torneo-tiro.gol span { background: var(--pitch-lime); }
+.torneo-tiro.fallo span { background: #cf8a66; }
+.torneo-tiro.pendiente span { background: transparent; }
+
+.torneo-pie {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-top: 7px;
+}
+
+.torneo-ruta {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  min-width: 0;
+}
+
+.torneo-ruta-paso {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: rgba(241, 245, 234, 0.42);
+  font: 600 9px/1 "Barlow", sans-serif;
+  white-space: nowrap;
+}
+
+.torneo-ruta-paso:not(:last-child)::after {
+  content: "";
+  width: 8px;
+  height: 1px;
+  margin-left: 1px;
+  background: rgba(230, 239, 226, 0.22);
+}
+
+.torneo-ruta-paso::before {
+  content: "";
+  width: 5px;
+  height: 5px;
+  border: 1px solid currentColor;
+  border-radius: 50%;
+}
+
+.torneo-ruta-paso.superada { color: var(--pitch-lime); }
+.torneo-ruta-paso.superada::before { background: currentColor; }
+.torneo-ruta-paso.actual { color: var(--pitch-gold); }
+.torneo-ruta-paso.actual::before { background: currentColor; box-shadow: 0 0 0 2px rgba(246, 212, 90, 0.16); }
+.torneo-ruta-paso[aria-current="step"] { font-weight: 800; }
+
+.torneo-turno {
+  flex: none;
+  color: rgba(244, 247, 237, 0.76);
+  font: 700 10px/1 "Barlow", sans-serif;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+#torneo-panel.evento .torneo-marcador {
+  animation: marcador-latido 450ms cubic-bezier(.2,.75,.3,1) both;
+}
+
+#torneo-panel.cambio-ronda {
+  animation: llegada-ronda 620ms cubic-bezier(.2,.75,.3,1) both;
+}
+
+@keyframes marcador-latido {
+  0% { transform: scale(1); }
+  40% { transform: scale(1.12); }
+  100% { transform: scale(1); }
+}
+
+@keyframes llegada-ronda {
+  0% { opacity: .66; transform: translateY(-5px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+#botao-fixar,
+#botao-ranking {
+  border-color: rgba(225, 241, 227, 0.3);
+  background: rgba(5, 19, 26, 0.74);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+#botao-fixar.ativo {
+  border-color: var(--pitch-gold);
+  background: var(--pitch-gold);
+  color: #14231a;
+}
+
+#mensagem {
+  margin-top: 7px;
+  font-size: 21px;
+  letter-spacing: 0.025em;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.88);
+}
+
+#controles {
+  padding: 12px 13px 11px;
+  gap: 9px;
+  border: 1px solid rgba(223, 241, 225, 0.2);
+  border-radius: 18px;
+  background: linear-gradient(155deg, rgba(5, 19, 26, 0.88), rgba(9, 28, 33, 0.78));
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.32), inset 0 1px rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(10px);
+}
+
+#barra {
+  height: 13px;
+  border: 1px solid rgba(246, 248, 236, 0.88);
+  border-radius: 99px;
+  background: rgba(1, 10, 16, 0.76);
+  box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.48), 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+#barra-preenchida {
+  background: linear-gradient(90deg, #b9ef71 0%, #f4dc5e 64%, #ef8b51 100%);
+}
+
+#barra-ideal {
+  width: 3px;
+  background: #fff9d1;
+  box-shadow: 0 0 8px rgba(255, 248, 185, 0.8);
+}
+
+#botao-chute {
+  height: 62px;
+  border: 1px solid rgba(255, 248, 190, 0.78);
+  border-radius: 15px;
+  background: linear-gradient(180deg, #ffe783, #f2d052);
+  color: #17271b;
+  font-size: 25px;
+  font-weight: 900;
+  letter-spacing: 0.13em;
+  box-shadow: 0 4px 0 #ad8f31, 0 9px 20px rgba(0, 0, 0, 0.32), inset 0 1px rgba(255, 255, 255, 0.58);
+  transition: transform 130ms ease, filter 130ms ease;
+}
+
+#botao-chute:active,
+#botao-chute.pressionado {
+  transform: translateY(3px);
+  filter: brightness(1.06);
+  box-shadow: 0 1px 0 #ad8f31, 0 4px 10px rgba(0, 0, 0, 0.28);
+}
+
+#dica {
+  color: rgba(239, 246, 235, 0.82);
+  font-size: 12px;
+}
+
+#contato-bola {
+  border: 2px solid rgba(255, 255, 255, 0.82);
+  background: radial-gradient(circle at 38% 30%, #fff 0%, #f2f2e9 44%, #b9c1bc 100%);
+  box-shadow: 0 5px 16px rgba(0, 0, 0, 0.4), inset -5px -7px 10px rgba(40, 50, 45, 0.12);
+}
+
+#contato-rotulo {
+  font-size: 14px;
+}
+
+#resultado-titulo {
+  letter-spacing: 0.06em;
+  text-shadow: 0 4px 0 rgba(5, 13, 17, 0.7), 0 10px 28px rgba(0, 0, 0, 0.65);
+}
+
+#resultado.gol #resultado-titulo {
+  color: #ffe16a;
+  text-shadow: 0 4px 0 rgba(78, 56, 8, 0.62), 0 8px 30px rgba(246, 212, 90, 0.3);
+}
+
+#painel {
+  border: 1px solid rgba(214, 239, 220, 0.2);
+  background: var(--pitch-glass-strong);
+  color: var(--pitch-text);
+  box-shadow: 0 16px 38px rgba(0, 0, 0, 0.42);
+  backdrop-filter: blur(14px);
+}
+
+#painel h3 {
+  color: var(--pitch-gold);
+}
+
+#painel button,
+.folha-cabecalho button,
+#ranking-enviar {
+  background: var(--pitch-gold);
+  color: #17271b;
+}
+
+.folha {
+  border: 1px solid rgba(222, 240, 225, 0.16);
+  background: linear-gradient(155deg, #0a2028, #09171f 72%);
+  box-shadow: 0 -12px 48px rgba(0, 0, 0, 0.38);
+}
+
+.folha-cabecalho {
+  font-size: 21px;
+}
+
+.folha-explica,
+.folha-rodape {
+  color: var(--pitch-muted);
+}
+
+.item-cobrador,
+.ranking-linha {
+  border-color: rgba(220, 238, 225, 0.12);
+  background: rgba(218, 236, 224, 0.055);
+}
+
+.item-cobrador.escolhido,
+.ranking-linha.meu {
+  border-color: rgba(246, 212, 90, 0.7);
+  background: rgba(246, 212, 90, 0.1);
+}
+
+#ranking-entrar {
+  border-color: rgba(246, 212, 90, 0.42);
+  background: rgba(246, 212, 90, 0.08);
+}
+
+#ranking-nome {
+  border-color: rgba(225, 241, 227, 0.28);
+  background: rgba(2, 12, 18, 0.55);
+}
+
+#ranking-nome:focus {
+  border-color: var(--pitch-gold);
+  box-shadow: 0 0 0 2px rgba(246, 212, 90, 0.22);
+}
+
+#acoes-jogada button {
+  border-color: rgba(246, 212, 90, 0.9);
+  background: rgba(6, 21, 28, 0.9);
+  color: var(--pitch-gold);
+  font-family: "Barlow", "Trebuchet MS", sans-serif;
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(8px);
+}
+
+#replay-tag {
+  border: 1px solid rgba(255, 100, 100, 0.28);
+  background: rgba(7, 19, 26, 0.8);
+}
+
+button {
+  -webkit-tap-highlight-color: transparent;
+}
+
+button:focus-visible {
+  outline: 2px solid var(--pitch-lime);
+  outline-offset: 3px;
+}
+
+@media (max-width: 420px) {
+  #hud {
+    padding-right: 11px;
+    padding-left: 11px;
+  }
+
+  #titulo {
+    font-size: 17px;
+  }
+
+  #cartao-cobrador {
+    min-width: 164px;
+    padding-right: 8px;
+    padding-left: 8px;
+  }
+
+  #info {
+    font-size: 16px;
+  }
+
+  #modos button {
+    padding-right: 10px;
+    padding-left: 10px;
+    font-size: 11px;
+  }
+
+  #torneo-panel {
+    margin-top: 5px;
+    padding: 8px 9px 7px;
+  }
+
+  .torneo-duelo { gap: 8px; }
+  .torneo-equipo { font-size: 13px; }
+  .torneo-equipo { gap: 4px; }
+  .torneo-insignia { width: 21px; height: 24px; font-size: 6px; }
+  .torneo-marcador { font-size: 23px; }
+  .torneo-ruta { gap: 3px; }
+  .torneo-ruta-paso { gap: 3px; font-size: 8px; }
+  .torneo-ruta-paso:not(:last-child)::after { width: 5px; }
+  .torneo-turno { font-size: 9px; }
+}
+
+@media (max-width: 350px) {
+  .torneo-pie { align-items: flex-start; flex-direction: column; }
+  .torneo-ruta { width: 100%; justify-content: space-between; }
+  .torneo-ruta-paso:not(:last-child)::after { width: 3px; }
+}
+
+#hud.replay #torneo-panel { display: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* El torneo vive en una esquina: marcador y fase sin bloquear el arco. */
+#torneo-panel {
+  position: fixed;
+  z-index: 2;
+  top: calc(env(safe-area-inset-top) + 7px);
+  right: calc(env(safe-area-inset-right) + 86px);
+  width: min(176px, calc(100vw - 250px));
+  min-width: 112px;
+  margin: 0;
+  padding: 5px 8px;
+  border-left-width: 2px;
+  border-radius: 4px 9px 9px 4px;
+}
+
+.torneo-cabecera {
+  font-size: 8px;
+  letter-spacing: 0.06em;
+}
+
+.torneo-en-vivo {
+  gap: 4px;
+  font-size: 7px;
+  white-space: nowrap;
+}
+
+.torneo-en-vivo::before {
+  width: 5px;
+  height: 5px;
+}
+
+.torneo-duelo {
+  gap: 5px;
+  margin-top: 3px;
+}
+
+.torneo-equipo {
+  gap: 3px;
+  font-size: 10px;
+}
+
+.torneo-insignia {
+  width: 17px;
+  height: 19px;
+  font-size: 5px;
+}
+
+.torneo-marcador {
+  gap: 3px;
+  font-size: 19px;
+}
+
+.torneo-marcador span {
+  min-width: 10px;
+}
+
+.torneo-marcador i {
+  font-size: 13px;
+}
+
+.torneo-progreso,
+.torneo-pie {
+  display: none;
+}
+
+#torneo-panel.evento {
+  border-color: rgba(246, 212, 90, 0.82);
+  box-shadow: 0 0 20px rgba(246, 212, 90, 0.22), 0 7px 20px rgba(0, 0, 0, 0.28);
+}
+
+#hud.modo-torneo #versao {
+  display: none;
+}
+
+#hud.modo-torneo #titulo {
+  max-width: 190px;
+  overflow: hidden;
+  font-size: clamp(11px, 1.7vw, 17px);
+  letter-spacing: 0.06em;
+  white-space: nowrap;
+}
+
+#hud.modo-torneo.torneo-disparo::after,
+#hud.modo-torneo.torneo-efecto-gol::after,
+#hud.modo-torneo.torneo-efecto-rival::after,
+#hud.modo-torneo.torneo-efecto-fallo::after {
+  z-index: 4;
+  animation-fill-mode: both;
+}
+
+#hud.modo-torneo.torneo-disparo::after {
+  background: radial-gradient(ellipse at 50% 46%, rgba(246, 212, 90, 0.28), transparent 64%);
+  animation: torneo-destello 430ms ease-out;
+}
+
+#hud.modo-torneo.torneo-efecto-gol::after {
+  background:
+    radial-gradient(ellipse at 50% 42%, rgba(255, 249, 214, 0.48), transparent 54%),
+    linear-gradient(115deg, rgba(184, 239, 113, 0.14), transparent 44%, rgba(246, 212, 90, 0.16));
+  animation: torneo-gol-destello 920ms cubic-bezier(.15, .75, .25, 1);
+}
+
+#hud.modo-torneo.torneo-efecto-rival::after,
+#hud.modo-torneo.torneo-efecto-fallo::after {
+  background: radial-gradient(ellipse at 50% 46%, rgba(255, 141, 92, 0.2), transparent 68%);
+  animation: torneo-destello 520ms ease-out;
+}
+
+#hud.modo-torneo.torneo-efecto-gol #resultado.gol #resultado-titulo {
+  animation: torneo-titulo-gol 900ms cubic-bezier(.15, .75, .25, 1) both;
+}
+
+#efectos-torneo {
+  position: fixed;
+  inset: 0;
+  z-index: 5;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.torneo-particula {
+  position: absolute;
+  left: calc(50% + var(--x));
+  top: calc(42% + var(--y));
+  width: var(--tamano);
+  height: calc(var(--tamano) * 1.8);
+  border-radius: 2px;
+  background: var(--color);
+  box-shadow: 0 0 12px var(--color);
+  animation: torneo-confeti 1250ms cubic-bezier(.13, .64, .28, 1) var(--demora) both;
+}
+
+@keyframes torneo-destello {
+  0% { opacity: .82; }
+  100% { opacity: 0; }
+}
+
+@keyframes torneo-gol-destello {
+  0% { opacity: 0; }
+  18% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+@keyframes torneo-confeti {
+  0% { opacity: 0; transform: translate3d(0, 0, 0) rotate(0) scale(.5); }
+  14% { opacity: 1; }
+  100% { opacity: 0; transform: translate3d(var(--dx), var(--dy), 0) rotate(var(--giro)) scale(.7); }
+}
+
+@keyframes torneo-titulo-gol {
+  0% { transform: scale(.86); filter: brightness(1); }
+  30% { transform: scale(1.16); filter: brightness(1.5); }
+  58% { transform: scale(.98); }
+  100% { transform: scale(1); filter: brightness(1); }
+}
+
+@media (max-width: 420px) {
+  #hud.modo-torneo #titulo {
+    max-width: 132px;
+    font-size: 13px;
+    letter-spacing: 0.045em;
+  }
+
+  #torneo-panel {
+    right: calc(env(safe-area-inset-right) + 74px);
+    width: min(146px, calc(100vw - 216px));
+    min-width: 102px;
+    padding: 4px 6px;
+  }
+
+  .torneo-equipo { font-size: 9px; }
+  .torneo-insignia { width: 15px; height: 17px; }
+  .torneo-marcador { font-size: 17px; }
+}
+
+@media (max-width: 350px) {
+  #hud.modo-torneo #titulo {
+    max-width: 104px;
+    font-size: 11px;
+  }
+
+  #torneo-panel {
+    right: calc(env(safe-area-inset-right) + 68px);
+    width: min(126px, calc(100vw - 194px));
+    min-width: 96px;
+  }
+}
